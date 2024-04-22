@@ -28,5 +28,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.2 # 使用插件 => https://github.com/JamesIves/github-pages-deploy-action
         with:
-          branch: gh-pages # 部署后提交到的分支
+          branch: master # 部署后提交到的分支
           folder: dist # 这里填打包好的目录名称
