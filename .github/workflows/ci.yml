@@ -20,10 +20,13 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.4
       
+      - name: Install dependencies
+        shell: bash
+        run: pnpm install
+
       # step 3、安装依赖并打包
       - name: Install and Build
         run: |
-          pnpm install
           pnpm config set registry https://registry.npmmirror.com
           pnpm build
 
