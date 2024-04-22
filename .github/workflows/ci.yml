@@ -7,6 +7,12 @@ on:
     branches:
       - master
 
+permissions:
+  actions: write       # Necessary to cancel workflow executions
+  checks: write        # Necessary to write reports
+  pull-requests: write # Necessary to comment on PRs
+  contents: read
+  packages: write
 # 3、创建工作流
 jobs:
   build-and-deploy:  # 工作流名称
