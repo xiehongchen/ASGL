@@ -22,6 +22,7 @@ jobs:
       # step 1、 获取源码, 拉取仓库代码
       - name: Checkout  # 步骤名
         uses: actions/checkout@v4  # 使用插件 => https://github.com/actions/checkout
+      - uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Set up Node
