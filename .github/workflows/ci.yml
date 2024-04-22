@@ -21,10 +21,9 @@ jobs:
     steps:  # 工作流步骤
       # step 1、 获取源码, 拉取仓库代码
       - name: Checkout  # 步骤名
-        uses: actions/checkout@master  # 使用插件 => https://github.com/actions/checkout
+        uses: actions/checkout@v4  # 使用插件 => https://github.com/actions/checkout
         with:
           version: 8
-          persist-credentials: false
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
