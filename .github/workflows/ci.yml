@@ -8,15 +8,15 @@ jobs:
     runs-on: ubuntu-latest #运行环境
     steps:
       - name: Checkout
-        uses: actions/checkout@v2 #获取源码
+        uses: actions/checkout@v4 #获取源码
         with:
           persist-credentials: false
       - name: Install and Build
         run: |
-          yarn install
-          yarn build
+          pnpm install
+          pnpm build
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: actions/deploy-pages@v4
         with:
           GITHUB_TOKEN: ${{ secrets.ACESS_TOKEN }}
           BRANCH: gh-pages
