@@ -34,6 +34,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # 也就是我们刚才生成的 secret
           branch: gh-pages # 部署后提交到的分支
           folder: dist # 这里填打包好的目录名称
