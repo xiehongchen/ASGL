@@ -1,0 +1,23 @@
+name: GitHub Actions Build and Deploy Demo
+on:
+  push:
+    branches:
+      - master  #在master分支发生push事件时触发
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest #运行环境
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2 #获取源码
+        with:
+          persist-credentials: false
+      - name: Install and Build
+        run: |
+          yarn install
+          yarn build
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: dist
