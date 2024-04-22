@@ -7,6 +7,7 @@ on:
     branches:
       - master
 
+# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages。
 permissions:
   actions: write       # Necessary to cancel workflow executions
   checks: write        # Necessary to write reports
@@ -22,14 +23,18 @@ jobs:
       - name: Checkout  # 步骤名
         uses: actions/checkout@master  # 使用插件 => https://github.com/actions/checkout
         with:
+          version: 8
           persist-credentials: false
-
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
       # step 3、安装依赖并打包
-      - name: Install and Build
-        run: |
-          npm install
-          npm run build
-
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build
+        run: pnpm build
       # step 4、部署到指定分支
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
