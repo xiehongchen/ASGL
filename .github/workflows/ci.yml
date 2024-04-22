@@ -1,33 +1,65 @@
-# 1、工作流名称
-name: GitHub Actions Build and Deploy
+# # 1、工作流名称
+# name: GitHub Actions Build and Deploy
 
-# 2、触发条件为：当master分支有push的时候
+# # 2、触发条件为：当master分支有push的时候
+# on:
+#   push:
+#     branches:
+#       - master
+
+# # 3、创建工作流
+# jobs:
+#   build-and-deploy:  # 工作流名称
+#     runs-on: ubuntu-latest  # 依赖环境
+#     steps:  # 工作流步骤
+#       # step 1、 获取源码, 拉取仓库代码
+#       - name: Checkout  # 步骤名
+#         uses: actions/checkout@master  # 使用插件 => https://github.com/actions/checkout
+#         with:
+#           persist-credentials: false
+
+#       # step 3、安装依赖并打包
+#       - name: Install and Build
+#         run: |
+#           npm install
+#           npm run build
+
+#       # step 4、部署到指定分支
+#       - name: Deploy
+#         uses: JamesIves/github-pages-deploy-action@v4.2.2 # 使用插件 => https://github.com/JamesIves/github-pages-deploy-action
+#         with:
+#           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # 也就是我们刚才生成的 secret
+#           branch: gh-pages # 部署后提交到的分支
+#           folder: dist # 这里填打包好的目录名称
+
+name:
+  CI
+  # 触发条件：在 push 到 main/master 分支后，新的 Github 项目 应该都是 main，而之前的项目一般都是 master
 on:
   push:
     branches:
       - master
-
-# 3、创建工作流
+# 任务
 jobs:
-  build-and-deploy:  # 工作流名称
-    runs-on: ubuntu-latest  # 依赖环境
-    steps:  # 工作流步骤
-      # step 1、 获取源码, 拉取仓库代码
-      - name: Checkout  # 步骤名
-        uses: actions/checkout@master  # 使用插件 => https://github.com/actions/checkout
+  build-and-deploy:
+    # 服务器环境：最新版 Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
-
-      # step 3、安装依赖并打包
-      - name: Install and Build
+      # 生成静态文件
+      - name: Build
         run: |
-          npm install
-          npm run build
+          npm install  # 安装依赖
+          npm run docs:build  # 执行打包
 
-      # step 4、部署到指定分支
+      # 部署到 GitHub Pages
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.2.2 # 使用插件 => https://github.com/JamesIves/github-pages-deploy-action
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # 也就是我们刚才生成的 secret
-          branch: gh-pages # 部署后提交到的分支
-          folder: dist # 这里填打包好的目录名称
+          BRANCH: gh-pages # 部署到 gh-pages 分支，因为 main 分支存放的一般是源码，而 gh-pages 分支则用来存放生成的静态文件
+          FOLDER: docs-dist # 生成的静态文件存放的地方
