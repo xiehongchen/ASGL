@@ -15,21 +15,18 @@ jobs:
       # step 1、 获取源码, 拉取仓库代码
       - name: Checkout  # 步骤名
         uses: actions/checkout@master  # 使用插件 => https://github.com/actions/checkout
-
-      # step 2、 下载node包
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
-      
-      - name: Install dependencies
-        shell: bash
-        run: pnpm install
+        with:
+          persist-credentials: false
 
       # step 3、安装依赖并打包
       - name: Install and Build
         run: |
-          pnpm config set registry https://registry.npmmirror.com
-          pnpm build
+          npm install
+          npm run build
 
       # step 4、部署到指定分支
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.2 # 使用插件 => https://github.com/JamesIves/github-pages-deploy-action
+        with:
+          branch: gh-pages # 部署后提交到的分支
+          folder: dist # 这里填打包好的目录名称
