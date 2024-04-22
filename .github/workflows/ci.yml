@@ -1,23 +1,41 @@
-name: GitHub Actions Build and Deploy Demo
+# 1、工作流名称
+name: GitHub Actions Build and Deploy
+
+# 2、触发条件为：当master分支有push的时候
 on:
   push:
     branches:
-      - master  #在master分支发生push事件时触发
+      - master
+
+# 3、创建工作流
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest #运行环境
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4 #获取源码
+  build-and-deploy:  # 工作流名称
+    runs-on: ubuntu-latest  # 依赖环境
+    steps:  # 工作流步骤
+      # step 1、 获取源码, 拉取仓库代码
+      - name: Checkout  # 步骤名
+        uses: actions/checkout@master  # 使用插件 => https://github.com/actions/checkout
+
+      # step 2、 下载node包
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          persist-credentials: false
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        shell: bash
+        run: pnpm install
+
+      # step 3、安装依赖并打包
       - name: Install and Build
         run: |
-          pnpm install
+          pnpm config set registry https://registry.npmmirror.com
           pnpm build
+
+      # step 4、部署到指定分支
       - name: Deploy
-        uses: actions/deploy-pages@v4
-        with:
-          GITHUB_TOKEN: ${{ secrets.ACESS_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist
+        uses: JamesIves/github-pages-deploy-action@v4.2.2 # 使用插件 => https://github.com/JamesIves/github-pages-deploy-action
