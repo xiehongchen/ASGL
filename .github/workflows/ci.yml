@@ -30,12 +30,12 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
-      # step 3、安装依赖并打包
+      # step 2、安装依赖并打包
       - name: Install dependencies
         run: pnpm install
       - name: Build
         run: pnpm build
-      # step 4、部署到指定分支
+      # step 3、部署到指定分支
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
