@@ -8,11 +8,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   // 开启严格模式
   <React.StrictMode>
     <ConfigProvider 
-    theme={{
-      token: {
-        colorText: '#FFF'
-      }
-    }}>
+    theme={{}}>
       <App />
     </ConfigProvider>
   </React.StrictMode>,

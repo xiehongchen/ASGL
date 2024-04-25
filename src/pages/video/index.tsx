@@ -1,10 +1,10 @@
 // import VideoPlayer from "@/components/VideoPlayer"
 // import FileList from "@/components/FileList"
-import GetFile from "@/components/GetFile"
+import UploadFileList from "@/components/UploadFileList"
 const video = () => {
   return (
     <div>
-      <GetFile />
+      <UploadFileList />
       {/* <FileList /> */}
       {/* <VideoPlayer /> */}
     </div>
