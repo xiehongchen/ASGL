@@ -17,6 +17,28 @@ function VideoPlayer() {
       setFile(selectedFile);
     }
   };
+    const renderFileDetails = () => {
+    if (!file) return null;
+
+    const fileDetails: { [key: string]: string | number } = {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+    };
+
+    return (
+      <div>
+        <p>文件信息:</p>
+        <ul>
+          {Object.keys(fileDetails).map((key) => (
+            <li key={key}>
+              <strong>{key}:</strong> {fileDetails[key]}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
   return (
     <div className='content'>
@@ -44,18 +66,7 @@ function VideoPlayer() {
       </div>
       <div>
         <input type="file" onChange={onchange}/>
-        {file && (
-        <div>
-          <p>文件信息:</p>
-          <ul>
-            {Object.keys(file).map((key) => (
-              <li key={key}>
-                <strong>{key}:</strong> {file[key as keyof File]}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+         {renderFileDetails()}
       </div>
     </div>
   );
