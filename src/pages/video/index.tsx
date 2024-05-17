@@ -10,11 +10,13 @@ function VideoPlayer() {
     }
   };
   const [file, setFile] = useState<File | null>(null);
+  const [fileUrl, setFileUrl] = useState<string>('https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/540p.mp4')
   const onchange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log('event', event)
     const selectedFile = event.target.files && event.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
+      setFileUrl(URL.createObjectURL(selectedFile))
     }
   };
     const renderFileDetails = () => {
@@ -44,7 +46,7 @@ function VideoPlayer() {
     <div className='content'>
       <video
         className='video'
-        ref={videoRef} src='https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/540p.mp4'
+        ref={videoRef} src={fileUrl}
         width="320" height="240"
         controls>
       </video>
